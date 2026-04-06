@@ -1,0 +1,155 @@
+// Siyo Syntax Highlighting Test
+
+import "math"
+import java "java.util.ArrayList"
+
+// === Structs & Enums ===
+struct Point {
+    x: int,
+    y: int
+}
+
+enum Color { Red, Green, Blue }
+
+impl Point {
+    fn new(x: int, y: int) -> Point {
+        Point { x: x, y: y }
+    }
+
+    fn distance(self, other: Point) -> float {
+        imut dx = self.x - other.x
+        imut dy = self.y - other.y
+        toFloat(dx * dx + dy * dy)
+    }
+
+    fn toString(self) -> string {
+        "({self.x}, {self.y})"
+    }
+}
+
+// === Actor & Concurrency ===
+actor Counter {
+    count: int,
+    name: string
+}
+
+impl Counter {
+    fn new(name: string) -> Counter {
+        Counter { count: 0, name: name }
+    }
+
+    fn increment(self) -> int {
+        self.count = self.count + 1
+        self.count
+    }
+
+    fn reset(self) {
+        self.count = 0
+    }
+}
+
+// === Main Function ===
+fn main() {
+    // Variables
+    mut score = 0
+    imut greeting = "Hello, Siyo!"
+    imut pi = 3.14159
+    imut active = true
+    imut nothing = null
+
+    // String interpolation
+    println("Message: {greeting}")
+    println("Pi is {pi} and active is {active}")
+    println("Escaped brace: \{ not interpolation \}")
+
+    // Arithmetic & operators
+    mut result = (10 + 20) * 3 / 2 - 5 % 3
+    result += 1
+    score = score << 2 | 0xFF & 0x0F
+
+    // Arrays
+    mut numbers = [1, 2, 3, 4, 5]
+    push(numbers, 6)
+    imut length = len(numbers)
+
+    // For loop
+    for num in numbers {
+        if num % 2 == 0 {
+            println("{num} is even")
+        } else {
+            println("{num} is odd")
+        }
+    }
+
+    // While loop
+    mut i = 0
+    while i < 10 {
+        if i == 5 {
+            break
+        }
+        i = i + 1
+    }
+
+    // Range
+    for x in range(0, 5) {
+        print("{x} ")
+    }
+
+    // Match expression
+    imut color = Color.Red
+    imut name = match color {
+        0 => "Red",
+        1 => "Green",
+        2 => "Blue",
+        _ => "Unknown"
+    }
+
+    // Structs
+    imut p1 = Point.new(3, 4)
+    imut p2 = Point.new(0, 0)
+    println("Distance: {p1.distance(p2)}")
+
+    // Collections
+    mut m = map()
+    m.set("key", "value")
+    mut s = set()
+    s.add(42)
+
+    // Type casting
+    imut x = 42 as float
+
+    // Try-catch
+    try {
+        imut parsed = parseInt("abc")
+    } catch e {
+        println("Error: {e}")
+    }
+
+    // Concurrency
+    imut counter = Counter.new("main")
+    scope {
+        spawn counter.increment()
+        spawn counter.increment()
+        spawn counter.increment()
+    }
+    println("Final count: {counter.count}")
+
+    // Channel
+    imut ch = channel(10)
+    send ch.put("hello")
+
+    // Lambda / higher-order function
+    imut doubled = transform(numbers, fn(n: int) -> int {
+        n * 2
+    })
+
+    println("Done!")
+}
+
+fn transform(arr: int[], f: fn(int) -> int) -> int[] {
+    mut result = []
+    for item in arr {
+        push(result, f(item))
+    }
+    return result
+}

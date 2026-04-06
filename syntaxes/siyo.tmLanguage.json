@@ -1,0 +1,299 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Siyo",
+  "scopeName": "source.siyo",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#constants" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#function-definition" },
+    { "include": "#function-call" },
+    { "include": "#built-in-functions" },
+    { "include": "#struct-literal" },
+    { "include": "#identifiers" },
+    { "include": "#punctuation" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.siyo",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.siyo",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.siyo",
+              "match": "\\\\[\\\\\"nrt0{}]"
+            },
+            {
+              "name": "meta.interpolation.siyo",
+              "begin": "(?<!\\\\)\\{",
+              "end": "\\}",
+              "beginCaptures": {
+                "0": { "name": "punctuation.definition.interpolation.begin.siyo" }
+              },
+              "endCaptures": {
+                "0": { "name": "punctuation.definition.interpolation.end.siyo" }
+              },
+              "patterns": [
+                { "include": "source.siyo" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.flow.siyo",
+          "match": "\\b(if|else|while|for|in|return|match|break|continue)\\b"
+        },
+        {
+          "name": "keyword.control.trycatch.siyo",
+          "match": "\\b(try|catch)\\b"
+        },
+        {
+          "name": "storage.type.function.siyo",
+          "match": "\\b(fn)\\b"
+        },
+        {
+          "name": "storage.modifier.siyo",
+          "match": "\\b(mut|imut)\\b"
+        },
+        {
+          "name": "storage.type.struct.siyo",
+          "match": "\\b(struct|enum|impl)\\b"
+        },
+        {
+          "name": "keyword.other.actor.siyo",
+          "match": "\\b(actor)\\b"
+        },
+        {
+          "name": "keyword.control.concurrency.siyo",
+          "match": "\\b(spawn|scope|send)\\b"
+        },
+        {
+          "name": "keyword.control.import.siyo",
+          "match": "\\b(import)\\b"
+        },
+        {
+          "name": "keyword.operator.cast.siyo",
+          "match": "\\b(as)\\b"
+        },
+        {
+          "name": "keyword.other.new.siyo",
+          "match": "\\b(new)\\b"
+        },
+        {
+          "name": "keyword.other.java.siyo",
+          "match": "\\b(java)\\b"
+        },
+        {
+          "name": "variable.language.self.siyo",
+          "match": "\\b(self)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.primitive.siyo",
+          "match": "\\b(int|string|bool|float|double|long|object|null)\\b"
+        },
+        {
+          "name": "support.type.collection.siyo",
+          "match": "\\b(channel|set|map)\\b"
+        },
+        {
+          "name": "support.type.self.siyo",
+          "match": "\\b(Self)\\b"
+        },
+        {
+          "comment": "User-defined type names (PascalCase identifiers)",
+          "name": "entity.name.type.siyo",
+          "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.siyo",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "constant.language.null.siyo",
+          "match": "\\b(null)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.siyo",
+          "match": "\\b[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.siyo",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arrow.siyo",
+          "match": "->|=>"
+        },
+        {
+          "name": "keyword.operator.comparison.siyo",
+          "match": "==|!=|<=|>=|<|>"
+        },
+        {
+          "name": "keyword.operator.logical.siyo",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.bitwise.siyo",
+          "match": "<<|>>|&|\\||\\^|~"
+        },
+        {
+          "name": "keyword.operator.assignment.compound.siyo",
+          "match": "\\+=|-=|\\*=|/="
+        },
+        {
+          "name": "keyword.operator.assignment.siyo",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.arithmetic.siyo",
+          "match": "\\+|-|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.range.siyo",
+          "match": "\\.\\."
+        }
+      ]
+    },
+    "function-definition": {
+      "patterns": [
+        {
+          "match": "\\b(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+          "captures": {
+            "1": { "name": "storage.type.function.siyo" },
+            "2": { "name": "entity.name.function.siyo" }
+          }
+        }
+      ]
+    },
+    "function-call": {
+      "patterns": [
+        {
+          "match": "\\b([a-z_][a-zA-Z0-9_]*)\\s*\\(",
+          "captures": {
+            "1": { "name": "entity.name.function.call.siyo" }
+          }
+        }
+      ]
+    },
+    "built-in-functions": {
+      "patterns": [
+        {
+          "name": "support.function.io.siyo",
+          "match": "\\b(println|print|input)\\b(?=\\s*\\()"
+        },
+        {
+          "name": "support.function.conversion.siyo",
+          "match": "\\b(toString|parseInt|parseFloat|toInt|toFloat|toLong|toDouble|chr|ord)\\b(?=\\s*\\()"
+        },
+        {
+          "name": "support.function.string.siyo",
+          "match": "\\b(len|substring|contains|indexOf|startsWith|endsWith|replace|trim|toUpper|toLower|split)\\b(?=\\s*\\()"
+        },
+        {
+          "name": "support.function.array.siyo",
+          "match": "\\b(range|push|pop|removeAt|sort)\\b(?=\\s*\\()"
+        },
+        {
+          "name": "support.function.collection.siyo",
+          "match": "\\b(map|set|channel)\\b(?=\\s*\\()"
+        },
+        {
+          "name": "support.function.utility.siyo",
+          "match": "\\b(error|random|canRead|httpGet|httpPost)\\b(?=\\s*\\()"
+        }
+      ]
+    },
+    "struct-literal": {
+      "patterns": [
+        {
+          "match": "\\b([A-Z][a-zA-Z0-9_]*)\\s*\\{",
+          "captures": {
+            "1": { "name": "entity.name.type.siyo" }
+          }
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "name": "variable.other.siyo",
+          "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.separator.comma.siyo",
+          "match": ","
+        },
+        {
+          "name": "punctuation.terminator.colon.siyo",
+          "match": ":"
+        },
+        {
+          "name": "punctuation.accessor.dot.siyo",
+          "match": "\\."
+        },
+        {
+          "name": "punctuation.section.braces.begin.siyo",
+          "match": "\\{"
+        },
+        {
+          "name": "punctuation.section.braces.end.siyo",
+          "match": "\\}"
+        },
+        {
+          "name": "punctuation.section.brackets.begin.siyo",
+          "match": "\\["
+        },
+        {
+          "name": "punctuation.section.brackets.end.siyo",
+          "match": "\\]"
+        },
+        {
+          "name": "punctuation.section.parens.begin.siyo",
+          "match": "\\("
+        },
+        {
+          "name": "punctuation.section.parens.end.siyo",
+          "match": "\\)"
+        }
+      ]
+    }
+  }
+}

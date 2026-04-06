@@ -1,0 +1,51 @@
+{
+  "name": "siyo",
+  "displayName": "Siyo Language",
+  "description": "Syntax highlighting and language support for the Siyo programming language",
+  "version": "0.1.0",
+  "publisher": "SiyoLang",
+  "author": {
+    "name": "Siyo Language Team"
+  },
+  "license": "MIT",
+  "icon": "images/siyo-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siyo-lang/siyo-vscode"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "siyo",
+    "programming language",
+    "syntax highlighting",
+    "concurrency",
+    "actor model"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "siyo",
+        "aliases": [
+          "Siyo",
+          "siyo"
+        ],
+        "extensions": [
+          ".siyo"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "siyo",
+        "scopeName": "source.siyo",
+        "path": "./syntaxes/siyo.tmLanguage.json"
+      }
+    ]
+  }
+}

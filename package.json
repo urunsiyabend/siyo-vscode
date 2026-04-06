@@ -11,7 +11,7 @@
   "icon": "images/siyo-icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/siyo-lang/siyo-vscode"
+    "url": "https://github.com/urunsiyabend/siyo-vscode"
   },
   "engines": {
     "vscode": "^1.75.0"

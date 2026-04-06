@@ -15,12 +15,17 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm install -g @vscode/vsce
+      - run: npm install -g @vscode/vsce ovsx
 
       - run: vsce package --allow-missing-repository
 
       - name: Publish to VS Code Marketplace
+        if: secrets.VSCE_PAT != ''
         run: vsce publish -p ${{ secrets.VSCE_PAT }} --allow-missing-repository
+        continue-on-error: true
+
+      - name: Publish to Open VSX
+        run: ovsx publish -p ${{ secrets.OVSX_PAT }}
 
       - name: Upload VSIX artifact
         uses: actions/upload-artifact@v4

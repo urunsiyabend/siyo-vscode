@@ -16,7 +16,7 @@ This is a declarative extension: a TextMate grammar, a language configuration an
   - Numbers: decimal, hexadecimal (`0xFF`), long (`9000000000L`) and float literals.
   - Concurrency: `scope`, `spawn`, `send`, and actors.
   - Error handling: `try` / `catch`, `throw`.
-  - Contextual keywords: `type`, `send` and `java` are highlighted as keywords only where they are keywords.
+  - Contextual keywords: `type` and `send` are highlighted as keywords only where they act as keywords. They stay ordinary names elsewhere, as the parser allows: `mut type = "GET"`, `ch.send(x)`.
   - The built-in functions documented for 0.9.0.
 - Snippets for common declarations, control flow, concurrency, imports and `std/testing` suites.
 - Comment toggling (`Ctrl+/`), bracket matching, auto-closing pairs and folding.

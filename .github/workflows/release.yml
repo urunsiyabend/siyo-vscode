@@ -67,14 +67,18 @@ jobs:
       VSIX: ${{ needs.build.outputs.vsix }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
 
+      # This job can write to the repository and receives registry tokens: no
+      # package install scripts run here (publishing needs none).
       - name: Install pinned publishing tools
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Download tested VSIX
         uses: actions/download-artifact@v4
@@ -113,8 +117,8 @@ jobs:
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
         run: |
-          npx --no -- ovsx publish --packagePath "$VSIX"
-          echo "- Open VSX: published \`$VSIX\`" >> "$GITHUB_STEP_SUMMARY"
+          npx --no -- ovsx publish --packagePath "$VSIX" --skip-duplicate
+          echo "- Open VSX: published \`$VSIX\` (or this version was already there)" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Skip Open VSX
         if: steps.credentials.outputs.ovsx != 'true'
@@ -127,8 +131,8 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: |
-          npx --no -- vsce publish --packagePath "$VSIX"
-          echo "- VS Code Marketplace: published \`$VSIX\`" >> "$GITHUB_STEP_SUMMARY"
+          npx --no -- vsce publish --packagePath "$VSIX" --skip-duplicate
+          echo "- VS Code Marketplace: published \`$VSIX\` (or this version was already there)" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Skip VS Code Marketplace
         if: steps.credentials.outputs.vsce != 'true'

@@ -14,13 +14,12 @@ Syntax support updated for Siyo 0.9.0. Derived from the compiler's
 - **Unterminated strings:** a `"` string that is never closed now ends at the end of its line, as the lexer does, instead of colouring the rest of the file.
 - **New keywords and declarations:** `type` sum types, `interface`, `impl Interface for Struct`, `pub`, `throw`, `do ... while`, and `actor struct`.
   - `type` and `send` are highlighted as keywords only where they act as keywords. They stay ordinary names elsewhere: `mut type = "GET"`, `ch.send(x)`, `fn send(...)`.
-  - `java` is a keyword only in `import java`.
-  - `new` is highlighted as a method name.
+  - `java` and `new` are reserved words. `new` is highlighted as a method name in `fn new` and `Type.new()`.
 - **Types:**
   - Generic type arguments: `Map<string, Array<Task>>` and `fn identity<T>(x: T) -> T`.
   - Function types such as `fn(int) -> int`.
   - `object`, `any`, `channel`, `map` and `set` are highlighted as types only in type positions, so the `map()`, `set()` and `channel()` builtins stay functions.
-- **Numbers:** hexadecimal (`0xFF`) and long (`9000000000L`, `0xFFL`) literals.
+- **Numbers:** hexadecimal (`0xFF`) and long (`9000000000L`, `0xFFL`) literals. A long suffix on a float (`1.5L`) is marked invalid, as the lexer reports it.
 - **New syntax highlighted:** `#{...}` set literals, the `=>` match arrow, the `_` wildcard, and declaration names for functions, structs, actors, enums, sum types, interfaces and variables.
 - **Built-in functions** now match the 0.9.0 documented set, which adds `filter`, `reduce`, `forEach`, `parseLong`, `fields`, `field`, `setField`, `toMap`, `typeName` and `typeOf`.
 - **Method calls** on built-in names (`text.trim()`, `m.set(k, v)`) are highlighted as methods.

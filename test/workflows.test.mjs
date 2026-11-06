@@ -43,7 +43,7 @@ describe('workflows', () => {
       for (const [jobName, job] of Object.entries((await load(name)).jobs)) {
         const setup = job.steps.find((s) => String(s.uses).startsWith('actions/setup-node@'));
         assert.equal(setup?.with?.['node-version-file'], '.nvmrc', `${name} ${jobName}`);
-        assert.match(runOf(job), /^npm ci$/m, `${name} ${jobName}`);
+        assert.match(runOf(job), /^npm ci( --ignore-scripts)?$/m, `${name} ${jobName}`);
         assert.doesNotMatch(runOf(job), /npm install|npx --yes|@latest/, `${name} ${jobName}`);
       }
     }
@@ -95,6 +95,17 @@ describe('workflows', () => {
         assert.ok(!skipped.env?.[secret]);
       });
     }
+
+    it('the job holding write access keeps its token out of .git and runs no install scripts', () => {
+      const checkout = publish.steps.find((s) => String(s.uses).startsWith('actions/checkout@'));
+      assert.equal(checkout.with?.['persist-credentials'], false);
+      assert.match(runOf(publish), /^npm ci --ignore-scripts$/m);
+    });
+
+    it('a re-run after a partial release does not fail on an already published version', () => {
+      assert.match(step('Publish to Open VSX').run, /ovsx publish .*--skip-duplicate/);
+      assert.match(step('Publish to VS Code Marketplace').run, /vsce publish .*--skip-duplicate/);
+    });
 
     it('only the publish job can write repository contents', () => {
       assert.deepEqual(wf.permissions, { contents: 'read' });

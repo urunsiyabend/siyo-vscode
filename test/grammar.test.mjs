@@ -102,8 +102,11 @@ describe('contextual keywords', () => {
     await assertNotKeyword('if type == "GET" { }', 'type');
   });
 
-  it('java is a keyword only after import', async () => {
-    await assertNotKeyword('mut java = 1', 'java');
+  it('java and new are reserved words, not names', async () => {
+    // SyntaxRules lexes both as keywords everywhere; only `send` and `type`
+    // are accepted as names by the parser.
+    await assertScope('java.util', 'java', 'keyword.other.java.siyo');
+    await assertScope('mut x = new', 'new', 'keyword.other.new.siyo');
   });
 
   it('new is a method name after fn and dot', async () => {
@@ -237,6 +240,9 @@ describe('numbers', () => {
     await assertScope('mut n = 0xFFl', 'l', 'storage.type.numeric.long.siyo');
   });
 
+  it('a long suffix on a float is invalid, as the lexer reports', () =>
+    assertScope('mut n = 1.5L', '1.5L', 'invalid.illegal.numeric.siyo'));
+
   it('member access on an integer is not a float', async () => {
     await assertScope('xs[0].name', '0', 'constant.numeric.decimal.siyo');
   });
@@ -317,6 +323,15 @@ describe('types', () => {
     await assertScope(source, '>', 'punctuation.definition.typeparameters.end.siyo', 0);
     await assertScope(source, '>', 'punctuation.definition.typeparameters.end.siyo', 1);
     await assertScope(source, '=', 'keyword.operator.assignment.siyo');
+  });
+
+  it('an unclosed generic does not bleed into the next lines', async () => {
+    for (const source of ['mut x: Map<string, List<int>\nmut y = 1', 'if A < B<c> {\nmut y = 1']) {
+      const lines = await tokenizeLines(source);
+      const mut = lines[1].find((t) => t.text === 'mut');
+      assert.ok(has(mut.scopes, 'storage.modifier.siyo'), `${JSON.stringify(source)}: ${mut.scopes.join(' ')}`);
+      assert.ok(!mut.scopes.includes('meta.type.parameters.siyo'), mut.scopes.join(' '));
+    }
   });
 
   it('comparison is not generic', async () => {
@@ -403,5 +418,15 @@ describe('calls and members', () => {
     const source = 'Result.Ok(v) => v,';
     await assertScope(source, 'Result', 'entity.name.type.siyo');
     await assertScope(source, '=>', 'keyword.operator.arrow.match.siyo');
+  });
+});
+
+describe('performance', () => {
+  it('long whitespace runs do not backtrack catastrophically', async () => {
+    for (const source of ['type X' + ' '.repeat(30000) + '<', 'Map' + ' '.repeat(30000) + '<', '"' + '$'.repeat(30000)]) {
+      const start = performance.now();
+      await tokens(source);
+      assert.ok(performance.now() - start < 2000, `${source.slice(0, 8)}... took ${Math.round(performance.now() - start)} ms`);
+    }
   });
 });

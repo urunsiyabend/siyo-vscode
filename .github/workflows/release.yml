@@ -1,0 +1,137 @@
+name: Release
+
+# Push a tag v<version> matching package.json. The VSIX is built and tested
+# once, then that same file is attached to the GitHub release and published to
+# each registry whose token is configured. A registry without a token is
+# skipped and reported in the run summary; a failed publish fails the run.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    outputs:
+      vsix: ${{ steps.version.outputs.vsix }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Check tag matches package.json version
+        id: version
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $version (expected v$version)"
+            exit 1
+          fi
+          echo "vsix=siyo-$version.vsix" >> "$GITHUB_OUTPUT"
+
+      - name: Install pinned toolchain
+        run: npm ci
+
+      - name: Test grammar, snippets and workflows
+        run: npm test
+
+      - name: Package VSIX
+        run: npm run package
+
+      - name: Verify VSIX
+        run: npm run verify:vsix
+
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: siyo-vsix
+          path: ${{ steps.version.outputs.vsix }}
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      VSIX: ${{ needs.build.outputs.vsix }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install pinned publishing tools
+        run: npm ci
+
+      - name: Download tested VSIX
+        uses: actions/download-artifact@v4
+        with:
+          name: siyo-vsix
+
+      - name: Verify downloaded VSIX
+        run: node scripts/verify-vsix.mjs "$VSIX"
+
+      - name: Attach VSIX to GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v heading="## $version" '$0 == heading { found = 1; next } /^## / { found = 0 } found' CHANGELOG.md > release-notes.md
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$VSIX" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$VSIX" --verify-tag --title "$GITHUB_REF_NAME" --notes-file release-notes.md
+          fi
+          echo "- GitHub release: attached \`$VSIX\` to $GITHUB_REF_NAME" >> "$GITHUB_STEP_SUMMARY"
+
+      # The secrets context cannot be read in `if:`. Expose each token only to
+      # this step and to the step that uses it, and branch on these outputs.
+      - name: Detect registry credentials
+        id: credentials
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          if [ -n "$OVSX_PAT" ]; then echo "ovsx=true" >> "$GITHUB_OUTPUT"; else echo "ovsx=false" >> "$GITHUB_OUTPUT"; fi
+          if [ -n "$VSCE_PAT" ]; then echo "vsce=true" >> "$GITHUB_OUTPUT"; else echo "vsce=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Publish to Open VSX
+        if: steps.credentials.outputs.ovsx == 'true'
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          npx --no -- ovsx publish --packagePath "$VSIX"
+          echo "- Open VSX: published \`$VSIX\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Skip Open VSX
+        if: steps.credentials.outputs.ovsx != 'true'
+        run: |
+          echo "::notice title=Open VSX skipped::OVSX_PAT is not configured; $VSIX was not published to Open VSX."
+          echo "- Open VSX: **skipped** (OVSX_PAT secret not configured)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish to VS Code Marketplace
+        if: steps.credentials.outputs.vsce == 'true'
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          npx --no -- vsce publish --packagePath "$VSIX"
+          echo "- VS Code Marketplace: published \`$VSIX\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Skip VS Code Marketplace
+        if: steps.credentials.outputs.vsce != 'true'
+        run: |
+          echo "::notice title=VS Code Marketplace skipped::VSCE_PAT is not configured; $VSIX was not published to the VS Code Marketplace."
+          echo "- VS Code Marketplace: **skipped** (VSCE_PAT secret not configured)" >> "$GITHUB_STEP_SUMMARY"

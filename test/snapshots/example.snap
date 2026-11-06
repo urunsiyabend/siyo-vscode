@@ -1,0 +1,1698 @@
+1: // Siyo 0.9 syntax highlighting sample. Runs with `siyoc run example.siyo`.
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Siyo 0.9 syntax highlighting sample. Runs with `siyoc run example.siyo`." comment.line.double-slash.siyo
+2: 
+  ""
+3: import "std/strings"
+  "import" keyword.control.import.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "std/strings" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+4: import "std/math" as m
+  "import" keyword.control.import.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "std/math" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  " "
+  "as" keyword.operator.as.siyo
+  " "
+  "m" variable.other.siyo
+5: import java "java.util.ArrayList"
+  "import" keyword.control.import.siyo
+  " "
+  "java" keyword.other.java.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "java.util.ArrayList" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+6: 
+  ""
+7: // === Structs, enums, sum types, interfaces ===
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " === Structs, enums, sum types, interfaces ===" comment.line.double-slash.siyo
+8: struct Point {
+  "struct" storage.type.struct.siyo
+  " "
+  "Point" entity.name.type.struct.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+9:     x: int,
+  "    "
+  "x" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  "," punctuation.separator.comma.siyo
+10:     y: int
+  "    "
+  "y" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+11: }
+  "}" punctuation.section.braces.end.siyo
+12: 
+  ""
+13: enum Color { Red, Green, Blue }
+  "enum" storage.type.enum.siyo
+  " "
+  "Color" entity.name.type.enum.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "Red" entity.name.type.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "Green" entity.name.type.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "Blue" entity.name.type.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+14: enum Status { OK = 200, CREATED = 201, NOT_FOUND = 404, GONE }
+  "enum" storage.type.enum.siyo
+  " "
+  "Status" entity.name.type.enum.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "OK" entity.name.type.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "200" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "CREATED" entity.name.type.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "201" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "NOT_FOUND" entity.name.type.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "404" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "GONE" entity.name.type.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+15: 
+  ""
+16: type Shape = Circle(float) | Rect(float, float) | Empty
+  "type" storage.type.sum.siyo
+  " "
+  "Shape" entity.name.type.sum.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "Circle" entity.name.type.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "float" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "|" keyword.operator.bitwise.siyo
+  " "
+  "Rect" entity.name.type.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "float" support.type.primitive.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "float" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "|" keyword.operator.bitwise.siyo
+  " "
+  "Empty" entity.name.type.siyo
+17: type Option<T> = Some(T) | None
+  "type" storage.type.sum.siyo
+  " "
+  "Option" entity.name.type.sum.siyo
+  "<" punctuation.definition.typeparameters.begin.siyo
+  "T" entity.name.type.parameter.siyo
+  ">" punctuation.definition.typeparameters.end.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "Some" entity.name.type.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "T" entity.name.type.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "|" keyword.operator.bitwise.siyo
+  " "
+  "None" entity.name.type.siyo
+18: 
+  ""
+19: interface Describe {
+  "interface" storage.type.interface.siyo
+  " "
+  "Describe" entity.name.type.interface.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+20:     fn describe() -> string
+  "    "
+  "fn" storage.type.function.siyo
+  " "
+  "describe" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "string" support.type.primitive.siyo
+21: }
+  "}" punctuation.section.braces.end.siyo
+22: 
+  ""
+23: impl Point {
+  "impl" storage.type.impl.siyo
+  " "
+  "Point" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+24:     fn new(x: int, y: int) -> Point {
+  "    "
+  "fn" storage.type.function.siyo
+  " "
+  "new" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "x" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "y" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "Point" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+25:         Point { x: x, y: y }
+  "        "
+  "Point" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "x" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "x" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "y" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "y" variable.other.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+26:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+27: 
+  ""
+28:     fn distanceSquared(self, other: Point) -> int {
+  "    "
+  "fn" storage.type.function.siyo
+  " "
+  "distanceSquared" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "self" variable.language.self.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "other" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "Point" entity.name.type.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "int" support.type.primitive.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+29:         imut dx = self.x - other.x
+  "        "
+  "imut" storage.modifier.siyo
+  " "
+  "dx" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "self" variable.language.self.siyo
+  "." punctuation.accessor.dot.siyo
+  "x" variable.other.property.siyo
+  " "
+  "-" keyword.operator.arithmetic.siyo
+  " "
+  "other" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "x" variable.other.property.siyo
+30:         imut dy = self.y - other.y
+  "        "
+  "imut" storage.modifier.siyo
+  " "
+  "dy" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "self" variable.language.self.siyo
+  "." punctuation.accessor.dot.siyo
+  "y" variable.other.property.siyo
+  " "
+  "-" keyword.operator.arithmetic.siyo
+  " "
+  "other" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "y" variable.other.property.siyo
+31:         dx * dx + dy * dy
+  "        "
+  "dx" variable.other.siyo
+  " "
+  "*" keyword.operator.arithmetic.siyo
+  " "
+  "dx" variable.other.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "dy" variable.other.siyo
+  " "
+  "*" keyword.operator.arithmetic.siyo
+  " "
+  "dy" variable.other.siyo
+32:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+33: }
+  "}" punctuation.section.braces.end.siyo
+34: 
+  ""
+35: impl Describe for Point {
+  "impl" storage.type.impl.siyo
+  " "
+  "Describe" entity.name.type.siyo
+  " "
+  "for" keyword.other.for.siyo
+  " "
+  "Point" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+36:     fn describe(self) -> string {
+  "    "
+  "fn" storage.type.function.siyo
+  " "
+  "describe" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "self" variable.language.self.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "string" support.type.primitive.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+37:         "(${self.x}, ${self.y})"
+  "        "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "(" string.quoted.double.siyo
+  "${" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.begin.siyo
+  "self" string.quoted.double.siyo meta.interpolation.siyo variable.language.self.siyo
+  "." string.quoted.double.siyo meta.interpolation.siyo punctuation.accessor.dot.siyo
+  "x" string.quoted.double.siyo meta.interpolation.siyo variable.other.property.siyo
+  "}" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.end.siyo
+  ", " string.quoted.double.siyo
+  "${" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.begin.siyo
+  "self" string.quoted.double.siyo meta.interpolation.siyo variable.language.self.siyo
+  "." string.quoted.double.siyo meta.interpolation.siyo punctuation.accessor.dot.siyo
+  "y" string.quoted.double.siyo meta.interpolation.siyo variable.other.property.siyo
+  "}" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.end.siyo
+  ")" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+38:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+39: }
+  "}" punctuation.section.braces.end.siyo
+40: 
+  ""
+41: fn area(s: Shape) -> float {
+  "fn" storage.type.function.siyo
+  " "
+  "area" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "s" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "Shape" entity.name.type.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "float" support.type.primitive.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+42:     match s {
+  "    "
+  "match" keyword.control.conditional.siyo
+  " "
+  "s" variable.other.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+43:         Circle(r) => 3.14159 * r * r,
+  "        "
+  "Circle" entity.name.type.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "r" variable.other.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "=>" keyword.operator.arrow.match.siyo
+  " "
+  "3.14159" constant.numeric.float.siyo
+  " "
+  "*" keyword.operator.arithmetic.siyo
+  " "
+  "r" variable.other.siyo
+  " "
+  "*" keyword.operator.arithmetic.siyo
+  " "
+  "r" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+44:         Shape.Rect(w, h) => w * h,
+  "        "
+  "Shape" entity.name.type.siyo
+  "." punctuation.accessor.dot.siyo
+  "Rect" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "w" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "h" variable.other.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "=>" keyword.operator.arrow.match.siyo
+  " "
+  "w" variable.other.siyo
+  " "
+  "*" keyword.operator.arithmetic.siyo
+  " "
+  "h" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+45:         Empty => 0.0,
+  "        "
+  "Empty" entity.name.type.siyo
+  " "
+  "=>" keyword.operator.arrow.match.siyo
+  " "
+  "0.0" constant.numeric.float.siyo
+  "," punctuation.separator.comma.siyo
+46:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+47: }
+  "}" punctuation.section.braces.end.siyo
+48: 
+  ""
+49: fn identity<T>(x: T) -> T { x }
+  "fn" storage.type.function.siyo
+  " "
+  "identity" entity.name.function.siyo
+  "<" punctuation.definition.typeparameters.begin.siyo
+  "T" entity.name.type.parameter.siyo
+  ">" punctuation.definition.typeparameters.end.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "x" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "T" entity.name.type.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "T" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "x" variable.other.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+50: 
+  ""
+51: fn transform(xs: int[], f: fn(int) -> int) -> int[] {
+  "fn" storage.type.function.siyo
+  " "
+  "transform" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "xs" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  "[" punctuation.section.brackets.begin.siyo
+  "]" punctuation.section.brackets.end.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "f" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "fn" storage.type.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "int" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "int" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "int" support.type.primitive.siyo
+  "[" punctuation.section.brackets.begin.siyo
+  "]" punctuation.section.brackets.end.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+52:     mut out: int[] = []
+  "    "
+  "mut" storage.modifier.siyo
+  " "
+  "out" variable.other.definition.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  "[" punctuation.section.brackets.begin.siyo
+  "]" punctuation.section.brackets.end.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "[" punctuation.section.brackets.begin.siyo
+  "]" punctuation.section.brackets.end.siyo
+53:     for item in xs {
+  "    "
+  "for" keyword.control.loop.siyo
+  " "
+  "item" variable.other.siyo
+  " "
+  "in" keyword.control.loop.siyo
+  " "
+  "xs" variable.other.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+54:         push(out, f(item))
+  "        "
+  "push" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "out" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "f" entity.name.function.call.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "item" variable.other.siyo
+  ")" punctuation.section.parens.end.siyo
+  ")" punctuation.section.parens.end.siyo
+55:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+56:     return out
+  "    "
+  "return" keyword.control.flow.siyo
+  " "
+  "out" variable.other.siyo
+57: }
+  "}" punctuation.section.braces.end.siyo
+58: 
+  ""
+59: // === Actors and concurrency ===
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " === Actors and concurrency ===" comment.line.double-slash.siyo
+60: actor Counter {
+  "actor" storage.type.actor.siyo
+  " "
+  "Counter" entity.name.type.actor.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+61:     count: int
+  "    "
+  "count" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+62: }
+  "}" punctuation.section.braces.end.siyo
+63: 
+  ""
+64: impl Counter {
+  "impl" storage.type.impl.siyo
+  " "
+  "Counter" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+65:     fn new() -> Counter { Counter { count: 0 } }
+  "    "
+  "fn" storage.type.function.siyo
+  " "
+  "new" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "Counter" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "Counter" entity.name.type.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "count" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+66: 
+  ""
+67:     fn increment(self, n: int) -> int {
+  "    "
+  "fn" storage.type.function.siyo
+  " "
+  "increment" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "self" variable.language.self.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "n" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "int" support.type.primitive.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+68:         self.count += n
+  "        "
+  "self" variable.language.self.siyo
+  "." punctuation.accessor.dot.siyo
+  "count" variable.other.property.siyo
+  " "
+  "+=" keyword.operator.assignment.compound.siyo
+  " "
+  "n" variable.other.siyo
+69:         self.count
+  "        "
+  "self" variable.language.self.siyo
+  "." punctuation.accessor.dot.siyo
+  "count" variable.other.property.siyo
+70:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+71: }
+  "}" punctuation.section.braces.end.siyo
+72: 
+  ""
+73: fn main() {
+  "fn" storage.type.function.siyo
+  " "
+  "main" entity.name.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+74:     // Variables and literals
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Variables and literals" comment.line.double-slash.siyo
+75:     mut score = 0
+  "    "
+  "mut" storage.modifier.siyo
+  " "
+  "score" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+76:     imut greeting = "Hello, Siyo!"
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "greeting" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "Hello, Siyo!" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+77:     imut pi = 3.14159
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "pi" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "3.14159" constant.numeric.float.siyo
+78:     imut big = 9000000000L
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "big" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "9000000000" constant.numeric.decimal.siyo
+  "L" storage.type.numeric.long.siyo
+79:     imut mask = 0xFF
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "mask" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "0xFF" constant.numeric.hex.siyo
+80:     imut active = true
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "active" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "true" constant.language.boolean.siyo
+81:     imut nothing: object = null
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "nothing" variable.other.definition.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "object" support.type.builtin.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "null" constant.language.null.siyo
+82: 
+  ""
+83:     // String interpolation and escapes
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " String interpolation and escapes" comment.line.double-slash.siyo
+84:     println("Message: $greeting")
+  "    "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "Message: " string.quoted.double.siyo
+  "$" string.quoted.double.siyo meta.interpolation.siyo punctuation.definition.interpolation.siyo
+  "greeting" string.quoted.double.siyo meta.interpolation.siyo variable.other.interpolated.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+85:     println("Pi is ${pi} and active is ${active}")
+  "    "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "Pi is " string.quoted.double.siyo
+  "${" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.begin.siyo
+  "pi" string.quoted.double.siyo meta.interpolation.siyo variable.other.siyo
+  "}" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.end.siyo
+  " and active is " string.quoted.double.siyo
+  "${" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.begin.siyo
+  "active" string.quoted.double.siyo meta.interpolation.siyo variable.other.siyo
+  "}" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.end.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+86:     println("Literal \$name and \{braces\}\tdone")
+  "    "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "Literal " string.quoted.double.siyo
+  "\\$" string.quoted.double.siyo constant.character.escape.siyo
+  "name and " string.quoted.double.siyo
+  "\\{" string.quoted.double.siyo constant.character.escape.siyo
+  "braces" string.quoted.double.siyo
+  "\\}" string.quoted.double.siyo constant.character.escape.siyo
+  "\\t" string.quoted.double.siyo constant.character.escape.siyo
+  "done" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+87:     imut banner = """
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "banner" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "\"\"\"" string.quoted.triple.siyo punctuation.definition.string.begin.siyo
+88: Siyo "${greeting}"
+  "Siyo \"" string.quoted.triple.siyo
+  "${" string.quoted.triple.siyo meta.interpolation.siyo punctuation.section.interpolation.begin.siyo
+  "greeting" string.quoted.triple.siyo meta.interpolation.siyo variable.other.siyo
+  "}" string.quoted.triple.siyo meta.interpolation.siyo punctuation.section.interpolation.end.siyo
+  "\"" string.quoted.triple.siyo
+89:   multi-line text
+  "  multi-line text" string.quoted.triple.siyo
+90: """
+  "\"\"\"" string.quoted.triple.siyo punctuation.definition.string.end.siyo
+91:     println(banner)
+  "    "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "banner" variable.other.siyo
+  ")" punctuation.section.parens.end.siyo
+92: 
+  ""
+93:     // Operators
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Operators" comment.line.double-slash.siyo
+94:     mut result = (10 + 20) * 3 / 2 - 5 % 3
+  "    "
+  "mut" storage.modifier.siyo
+  " "
+  "result" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "(" punctuation.section.parens.begin.siyo
+  "10" constant.numeric.decimal.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "20" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "*" keyword.operator.arithmetic.siyo
+  " "
+  "3" constant.numeric.decimal.siyo
+  " "
+  "/" keyword.operator.arithmetic.siyo
+  " "
+  "2" constant.numeric.decimal.siyo
+  " "
+  "-" keyword.operator.arithmetic.siyo
+  " "
+  "5" constant.numeric.decimal.siyo
+  " "
+  "%" keyword.operator.arithmetic.siyo
+  " "
+  "3" constant.numeric.decimal.siyo
+95:     result += 1
+  "    "
+  "result" variable.other.siyo
+  " "
+  "+=" keyword.operator.assignment.compound.siyo
+  " "
+  "1" constant.numeric.decimal.siyo
+96:     score = (score << 2) | (mask & 0x0F)
+  "    "
+  "score" variable.other.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "(" punctuation.section.parens.begin.siyo
+  "score" variable.other.siyo
+  " "
+  "<<" keyword.operator.bitwise.shift.siyo
+  " "
+  "2" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "|" keyword.operator.bitwise.siyo
+  " "
+  "(" punctuation.section.parens.begin.siyo
+  "mask" variable.other.siyo
+  " "
+  "&" keyword.operator.bitwise.siyo
+  " "
+  "0x0F" constant.numeric.hex.siyo
+  ")" punctuation.section.parens.end.siyo
+97:     imut ok = !(result == 0) && (score != 1 || big > 0L)
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "ok" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "!" keyword.operator.logical.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "result" variable.other.siyo
+  " "
+  "==" keyword.operator.comparison.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "&&" keyword.operator.logical.siyo
+  " "
+  "(" punctuation.section.parens.begin.siyo
+  "score" variable.other.siyo
+  " "
+  "!=" keyword.operator.comparison.siyo
+  " "
+  "1" constant.numeric.decimal.siyo
+  " "
+  "||" keyword.operator.logical.siyo
+  " "
+  "big" variable.other.siyo
+  " "
+  ">" keyword.operator.comparison.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+  "L" storage.type.numeric.long.siyo
+  ")" punctuation.section.parens.end.siyo
+98: 
+  ""
+99:     // Collections
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Collections" comment.line.double-slash.siyo
+100:     mut numbers = [1, 2, 3, 4, 5]
+  "    "
+  "mut" storage.modifier.siyo
+  " "
+  "numbers" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "[" punctuation.section.brackets.begin.siyo
+  "1" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "2" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "3" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "4" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "5" constant.numeric.decimal.siyo
+  "]" punctuation.section.brackets.end.siyo
+101:     push(numbers, 6)
+  "    "
+  "push" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "numbers" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "6" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+102:     mut prices: Map<string, int> = {"apple": 100, "pear": 120}
+  "    "
+  "mut" storage.modifier.siyo
+  " "
+  "prices" variable.other.definition.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "Map" meta.type.parameters.siyo support.type.generic.siyo
+  "<" meta.type.parameters.siyo punctuation.definition.typeparameters.begin.siyo
+  "string" meta.type.parameters.siyo support.type.primitive.siyo
+  "," meta.type.parameters.siyo punctuation.separator.comma.siyo
+  " " meta.type.parameters.siyo
+  "int" meta.type.parameters.siyo support.type.primitive.siyo
+  ">" meta.type.parameters.siyo punctuation.definition.typeparameters.end.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "apple" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "100" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "pear" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "120" constant.numeric.decimal.siyo
+  "}" punctuation.section.braces.end.siyo
+103:     prices["plum"] = 90
+  "    "
+  "prices" variable.other.siyo
+  "[" punctuation.section.brackets.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "plum" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  "]" punctuation.section.brackets.end.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "90" constant.numeric.decimal.siyo
+104:     imut tags = #{"a", "b"}
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "tags" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "#" punctuation.definition.set.siyo
+  "{" punctuation.section.braces.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "a" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "b" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  "}" punctuation.section.braces.end.siyo
+105:     imut evens = filter(numbers, fn(n: int) -> bool { n % 2 == 0 })
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "evens" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "filter" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "numbers" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "fn" storage.type.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "n" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "bool" support.type.primitive.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "n" variable.other.siyo
+  " "
+  "%" keyword.operator.arithmetic.siyo
+  " "
+  "2" constant.numeric.decimal.siyo
+  " "
+  "==" keyword.operator.comparison.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+  ")" punctuation.section.parens.end.siyo
+106:     imut total = reduce(numbers, fn(acc: int, n: int) -> int { acc + n }, 0)
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "total" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "reduce" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "numbers" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "fn" storage.type.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "acc" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "n" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "int" support.type.primitive.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "acc" variable.other.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "n" variable.other.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+107:     imut shouted = greeting.trim().toUpper()
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "shouted" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "greeting" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "trim" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+  "." punctuation.accessor.dot.siyo
+  "toUpper" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+108: 
+  ""
+109:     // Control flow
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Control flow" comment.line.double-slash.siyo
+110:     for mut i = 0 i < 3 i = i + 1 {
+  "    "
+  "for" keyword.control.loop.siyo
+  " "
+  "mut" storage.modifier.siyo
+  " "
+  "i" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+  " "
+  "i" variable.other.siyo
+  " "
+  "<" keyword.operator.comparison.siyo
+  " "
+  "3" constant.numeric.decimal.siyo
+  " "
+  "i" variable.other.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "i" variable.other.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "1" constant.numeric.decimal.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+111:         if i == 1 { continue }
+  "        "
+  "if" keyword.control.conditional.siyo
+  " "
+  "i" variable.other.siyo
+  " "
+  "==" keyword.operator.comparison.siyo
+  " "
+  "1" constant.numeric.decimal.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "continue" keyword.control.flow.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+112:         print("$i ")
+  "        "
+  "print" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "$" string.quoted.double.siyo meta.interpolation.siyo punctuation.definition.interpolation.siyo
+  "i" string.quoted.double.siyo meta.interpolation.siyo variable.other.interpolated.siyo
+  " " string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+113:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+114:     for key in prices {
+  "    "
+  "for" keyword.control.loop.siyo
+  " "
+  "key" variable.other.siyo
+  " "
+  "in" keyword.control.loop.siyo
+  " "
+  "prices" variable.other.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+115:         println("$key = ${prices[key]}")
+  "        "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "$" string.quoted.double.siyo meta.interpolation.siyo punctuation.definition.interpolation.siyo
+  "key" string.quoted.double.siyo meta.interpolation.siyo variable.other.interpolated.siyo
+  " = " string.quoted.double.siyo
+  "${" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.begin.siyo
+  "prices" string.quoted.double.siyo meta.interpolation.siyo variable.other.siyo
+  "[" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.brackets.begin.siyo
+  "key" string.quoted.double.siyo meta.interpolation.siyo variable.other.siyo
+  "]" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.brackets.end.siyo
+  "}" string.quoted.double.siyo meta.interpolation.siyo punctuation.section.interpolation.end.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+116:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+117:     mut n = 0
+  "    "
+  "mut" storage.modifier.siyo
+  " "
+  "n" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+118:     while n < 10 {
+  "    "
+  "while" keyword.control.loop.siyo
+  " "
+  "n" variable.other.siyo
+  " "
+  "<" keyword.operator.comparison.siyo
+  " "
+  "10" constant.numeric.decimal.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+119:         if n == 5 { break }
+  "        "
+  "if" keyword.control.conditional.siyo
+  " "
+  "n" variable.other.siyo
+  " "
+  "==" keyword.operator.comparison.siyo
+  " "
+  "5" constant.numeric.decimal.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "break" keyword.control.flow.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+120:         n = n + 1
+  "        "
+  "n" variable.other.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "n" variable.other.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "1" constant.numeric.decimal.siyo
+121:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+122:     do {
+  "    "
+  "do" keyword.control.loop.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+123:         n = n - 1
+  "        "
+  "n" variable.other.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "n" variable.other.siyo
+  " "
+  "-" keyword.operator.arithmetic.siyo
+  " "
+  "1" constant.numeric.decimal.siyo
+124:     } while n > 0
+  "    "
+  "}" punctuation.section.braces.end.siyo
+  " "
+  "while" keyword.control.loop.siyo
+  " "
+  "n" variable.other.siyo
+  " "
+  ">" keyword.operator.comparison.siyo
+  " "
+  "0" constant.numeric.decimal.siyo
+125:     imut label = if score > 50 { "pass" } else { "fail" }
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "label" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "if" keyword.control.conditional.siyo
+  " "
+  "score" variable.other.siyo
+  " "
+  ">" keyword.operator.comparison.siyo
+  " "
+  "50" constant.numeric.decimal.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "pass" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+  " "
+  "else" keyword.control.conditional.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "fail" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+126: 
+  ""
+127:     // Match, enums and sum types
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Match, enums and sum types" comment.line.double-slash.siyo
+128:     imut name = match Color.Red {
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "name" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "match" keyword.control.conditional.siyo
+  " "
+  "Color" entity.name.type.siyo
+  "." punctuation.accessor.dot.siyo
+  "Red" variable.other.property.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+129:         Color.Red => "red",
+  "        "
+  "Color" entity.name.type.siyo
+  "." punctuation.accessor.dot.siyo
+  "Red" variable.other.property.siyo
+  " "
+  "=>" keyword.operator.arrow.match.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "red" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  "," punctuation.separator.comma.siyo
+130:         _ => "other",
+  "        "
+  "_" variable.language.wildcard.siyo
+  " "
+  "=>" keyword.operator.arrow.match.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "other" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  "," punctuation.separator.comma.siyo
+131:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+132:     println(toString(area(Circle(2.0))))
+  "    "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "toString" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "area" entity.name.function.call.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "Circle" entity.name.type.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "2.0" constant.numeric.float.siyo
+  ")" punctuation.section.parens.end.siyo
+  ")" punctuation.section.parens.end.siyo
+  ")" punctuation.section.parens.end.siyo
+  ")" punctuation.section.parens.end.siyo
+133:     imut maybe: Option<int> = Some(5)
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "maybe" variable.other.definition.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "Option" meta.type.parameters.siyo entity.name.type.siyo
+  "<" meta.type.parameters.siyo punctuation.definition.typeparameters.begin.siyo
+  "int" meta.type.parameters.siyo support.type.primitive.siyo
+  ">" meta.type.parameters.siyo punctuation.definition.typeparameters.end.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "Some" entity.name.type.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "5" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+134: 
+  ""
+135:     // Errors
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Errors" comment.line.double-slash.siyo
+136:     try {
+  "    "
+  "try" keyword.control.trycatch.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+137:         throw "boom"
+  "        "
+  "throw" keyword.control.flow.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "boom" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+138:     } catch e {
+  "    "
+  "}" punctuation.section.braces.end.siyo
+  " "
+  "catch" keyword.control.trycatch.siyo
+  " "
+  "e" variable.other.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+139:         println("caught: $e")
+  "        "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "caught: " string.quoted.double.siyo
+  "$" string.quoted.double.siyo meta.interpolation.siyo punctuation.definition.interpolation.siyo
+  "e" string.quoted.double.siyo meta.interpolation.siyo variable.other.interpolated.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+140:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+141: 
+  ""
+142:     // Structs, interfaces and actors
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Structs, interfaces and actors" comment.line.double-slash.siyo
+143:     imut p = Point.new(3, 4)
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "p" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "Point" entity.name.type.siyo
+  "." punctuation.accessor.dot.siyo
+  "new" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "3" constant.numeric.decimal.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "4" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+144:     println(p.describe())
+  "    "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "p" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "describe" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+  ")" punctuation.section.parens.end.siyo
+145:     mut counter = spawn Counter.new()
+  "    "
+  "mut" storage.modifier.siyo
+  " "
+  "counter" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "spawn" keyword.control.concurrency.siyo
+  " "
+  "Counter" entity.name.type.siyo
+  "." punctuation.accessor.dot.siyo
+  "new" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+146:     imut now = counter.increment(5)
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "now" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "counter" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "increment" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "5" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+147:     send counter.increment(1)
+  "    "
+  "send" keyword.control.concurrency.siyo
+  " "
+  "counter" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "increment" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "1" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+148:     scope {
+  "    "
+  "scope" keyword.control.concurrency.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+149:         spawn { println("task one") }
+  "        "
+  "spawn" keyword.control.concurrency.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "task one" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+150:         spawn { println("task two") }
+  "        "
+  "spawn" keyword.control.concurrency.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "task two" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+151:     }
+  "    "
+  "}" punctuation.section.braces.end.siyo
+152: 
+  ""
+153:     // Channels
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Channels" comment.line.double-slash.siyo
+154:     imut ch = channel(10)
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "ch" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "channel" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "10" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+155:     ch.send(42)
+  "    "
+  "ch" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "send" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "42" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+156:     imut got = ch.receive()
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "got" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "ch" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "receive" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+157: 
+  ""
+158:     // Java interop and casts
+  "    "
+  "//" comment.line.double-slash.siyo punctuation.definition.comment.siyo
+  " Java interop and casts" comment.line.double-slash.siyo
+159:     imut list = ArrayList.new()
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "list" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "ArrayList" entity.name.type.siyo
+  "." punctuation.accessor.dot.siyo
+  "new" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  ")" punctuation.section.parens.end.siyo
+160:     list.add("x")
+  "    "
+  "list" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "add" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "x" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  ")" punctuation.section.parens.end.siyo
+161:     imut doubled = transform(numbers, fn(v: int) -> int { v * 2 })
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "doubled" variable.other.definition.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "transform" entity.name.function.call.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "numbers" variable.other.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "fn" storage.type.function.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "v" variable.other.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "int" support.type.primitive.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "->" keyword.operator.arrow.siyo
+  " "
+  "int" support.type.primitive.siyo
+  " "
+  "{" punctuation.section.braces.begin.siyo
+  " "
+  "v" variable.other.siyo
+  " "
+  "*" keyword.operator.arithmetic.siyo
+  " "
+  "2" constant.numeric.decimal.siyo
+  " "
+  "}" punctuation.section.braces.end.siyo
+  ")" punctuation.section.parens.end.siyo
+162:     imut erased: object = p
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "erased" variable.other.definition.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "object" support.type.builtin.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "p" variable.other.siyo
+163:     imut again: Point = erased as Point
+  "    "
+  "imut" storage.modifier.siyo
+  " "
+  "again" variable.other.definition.siyo
+  ":" punctuation.separator.colon.siyo
+  " "
+  "Point" entity.name.type.siyo
+  " "
+  "=" keyword.operator.assignment.siyo
+  " "
+  "erased" variable.other.siyo
+  " "
+  "as" keyword.operator.as.siyo
+  " "
+  "Point" entity.name.type.siyo
+164:     println(typeOf(got) + " " + strings.repeat("=", 3) + toString(m.abs(-2)) + toString(again.x))
+  "    "
+  "println" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "typeOf" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "got" variable.other.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  " " string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "strings" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "repeat" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.begin.siyo
+  "=" string.quoted.double.siyo
+  "\"" string.quoted.double.siyo punctuation.definition.string.end.siyo
+  "," punctuation.separator.comma.siyo
+  " "
+  "3" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "toString" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "m" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "abs" entity.name.function.member.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "-" keyword.operator.arithmetic.siyo
+  "2" constant.numeric.decimal.siyo
+  ")" punctuation.section.parens.end.siyo
+  ")" punctuation.section.parens.end.siyo
+  " "
+  "+" keyword.operator.arithmetic.siyo
+  " "
+  "toString" support.function.builtin.siyo
+  "(" punctuation.section.parens.begin.siyo
+  "again" variable.other.siyo
+  "." punctuation.accessor.dot.siyo
+  "x" variable.other.property.siyo
+  ")" punctuation.section.parens.end.siyo
+  ")" punctuation.section.parens.end.siyo
+165: }
+  "}" punctuation.section.braces.end.siyo
+166: 
+  ""

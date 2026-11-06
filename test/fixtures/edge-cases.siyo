@@ -1,0 +1,65 @@
+// Edge cases for the grammar. Valid Siyo 0.9.0: `siyoc run edge-cases.siyo`.
+
+pub struct Request {
+    type: string,
+    path: string,
+    headers: Map<string, Array<string>>
+}
+
+pub actor struct Mailbox {
+    size: int
+}
+
+impl Mailbox {
+    fn new() -> Mailbox { Mailbox { size: 0 } }
+    fn send(self, n: int) -> int {
+        self.size += n
+        self.size
+    }
+}
+
+type Result = Ok(int) | Err(string)
+
+pub fn check(r: Result) -> string {
+    match r {
+        Ok(_) => "fine",
+        Result.Err(why) => why,
+    }
+}
+
+fn pick(a: int, b: int) -> int {
+    if a < b || a > 100 { a } else { b }
+}
+
+fn main() {
+    // `type` and `send` are ordinary names outside their statements
+    mut type = "GET"
+    type = "POST"
+    imut req = Request { type: type, path: "/", headers: {} }
+    println(req.type)
+
+    imut box = spawn Mailbox.new()
+    send box.send(2)
+    println(toString(box.send(1)))
+
+    // Interpolation: nested braces, strings and calls inside ${}
+    imut counts = {"k": 1}
+    println("v=${ {"k": 1}["k"] } and ${counts["k"] + 1} items")
+    println("joined: ${toString(len("a,b"))} / $type / cost: $5 / {not interpolated}")
+    println("""
+raw "quotes" and ${pick(1, 2)}
+""")
+
+    // Numbers
+    imut values = [0, 42, 0x1F]
+    imut wide = [9000000000L, 0xFFL]
+    imut ratio = 0.5
+    println(toString(values[0]) + toString(wide[1]) + toString(ratio))
+
+    // Sets and C-style loops
+    imut seen = #{1, 2, 3}
+    for mut i = 0 i < 3 i = i + 1 {
+        print(toString(i))
+    }
+    println(toString(len(seen)) + check(Err("no")))
+}

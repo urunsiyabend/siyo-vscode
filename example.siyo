@@ -1,155 +1,165 @@
-// Siyo Syntax Highlighting Test
+// Siyo 0.9 syntax highlighting sample. Runs with `siyoc run example.siyo`.
 
-import "math"
+import "std/strings"
+import "std/math" as m
 import java "java.util.ArrayList"
 
-// === Structs & Enums ===
+// === Structs, enums, sum types, interfaces ===
 struct Point {
     x: int,
     y: int
 }
 
 enum Color { Red, Green, Blue }
+enum Status { OK = 200, CREATED = 201, NOT_FOUND = 404, GONE }
+
+type Shape = Circle(float) | Rect(float, float) | Empty
+type Option<T> = Some(T) | None
+
+interface Describe {
+    fn describe() -> string
+}
 
 impl Point {
     fn new(x: int, y: int) -> Point {
         Point { x: x, y: y }
     }
 
-    fn distance(self, other: Point) -> float {
+    fn distanceSquared(self, other: Point) -> int {
         imut dx = self.x - other.x
         imut dy = self.y - other.y
-        toFloat(dx * dx + dy * dy)
-    }
-
-    fn toString(self) -> string {
-        "({self.x}, {self.y})"
+        dx * dx + dy * dy
     }
 }
 
-// === Actor & Concurrency ===
+impl Describe for Point {
+    fn describe(self) -> string {
+        "(${self.x}, ${self.y})"
+    }
+}
+
+fn area(s: Shape) -> float {
+    match s {
+        Circle(r) => 3.14159 * r * r,
+        Shape.Rect(w, h) => w * h,
+        Empty => 0.0,
+    }
+}
+
+fn identity<T>(x: T) -> T { x }
+
+fn transform(xs: int[], f: fn(int) -> int) -> int[] {
+    mut out: int[] = []
+    for item in xs {
+        push(out, f(item))
+    }
+    return out
+}
+
+// === Actors and concurrency ===
 actor Counter {
-    count: int,
-    name: string
+    count: int
 }
 
 impl Counter {
-    fn new(name: string) -> Counter {
-        Counter { count: 0, name: name }
-    }
+    fn new() -> Counter { Counter { count: 0 } }
 
-    fn increment(self) -> int {
-        self.count = self.count + 1
+    fn increment(self, n: int) -> int {
+        self.count += n
         self.count
-    }
-
-    fn reset(self) {
-        self.count = 0
     }
 }
 
-// === Main Function ===
 fn main() {
-    // Variables
+    // Variables and literals
     mut score = 0
     imut greeting = "Hello, Siyo!"
     imut pi = 3.14159
+    imut big = 9000000000L
+    imut mask = 0xFF
     imut active = true
-    imut nothing = null
+    imut nothing: object = null
 
-    // String interpolation
-    println("Message: {greeting}")
-    println("Pi is {pi} and active is {active}")
-    println("Escaped brace: \{ not interpolation \}")
+    // String interpolation and escapes
+    println("Message: $greeting")
+    println("Pi is ${pi} and active is ${active}")
+    println("Literal \$name and \{braces\}\tdone")
+    imut banner = """
+Siyo "${greeting}"
+  multi-line text
+"""
+    println(banner)
 
-    // Arithmetic & operators
+    // Operators
     mut result = (10 + 20) * 3 / 2 - 5 % 3
     result += 1
-    score = score << 2 | 0xFF & 0x0F
-
-    // Arrays
-    mut numbers = [1, 2, 3, 4, 5]
-    push(numbers, 6)
-    imut length = len(numbers)
-
-    // For loop
-    for num in numbers {
-        if num % 2 == 0 {
-            println("{num} is even")
-        } else {
-            println("{num} is odd")
-        }
-    }
-
-    // While loop
-    mut i = 0
-    while i < 10 {
-        if i == 5 {
-            break
-        }
-        i = i + 1
-    }
-
-    // Range
-    for x in range(0, 5) {
-        print("{x} ")
-    }
-
-    // Match expression
-    imut color = Color.Red
-    imut name = match color {
-        0 => "Red",
-        1 => "Green",
-        2 => "Blue",
-        _ => "Unknown"
-    }
-
-    // Structs
-    imut p1 = Point.new(3, 4)
-    imut p2 = Point.new(0, 0)
-    println("Distance: {p1.distance(p2)}")
+    score = (score << 2) | (mask & 0x0F)
+    imut ok = !(result == 0) && (score != 1 || big > 0L)
 
     // Collections
-    mut m = map()
-    m.set("key", "value")
-    mut s = set()
-    s.add(42)
+    mut numbers = [1, 2, 3, 4, 5]
+    push(numbers, 6)
+    mut prices: Map<string, int> = {"apple": 100, "pear": 120}
+    prices["plum"] = 90
+    imut tags = #{"a", "b"}
+    imut evens = filter(numbers, fn(n: int) -> bool { n % 2 == 0 })
+    imut total = reduce(numbers, fn(acc: int, n: int) -> int { acc + n }, 0)
+    imut shouted = greeting.trim().toUpper()
 
-    // Type casting
-    imut x = 42 as float
+    // Control flow
+    for mut i = 0 i < 3 i = i + 1 {
+        if i == 1 { continue }
+        print("$i ")
+    }
+    for key in prices {
+        println("$key = ${prices[key]}")
+    }
+    mut n = 0
+    while n < 10 {
+        if n == 5 { break }
+        n = n + 1
+    }
+    do {
+        n = n - 1
+    } while n > 0
+    imut label = if score > 50 { "pass" } else { "fail" }
 
-    // Try-catch
+    // Match, enums and sum types
+    imut name = match Color.Red {
+        Color.Red => "red",
+        _ => "other",
+    }
+    println(toString(area(Circle(2.0))))
+    imut maybe: Option<int> = Some(5)
+
+    // Errors
     try {
-        imut parsed = parseInt("abc")
+        throw "boom"
     } catch e {
-        println("Error: {e}")
+        println("caught: $e")
     }
 
-    // Concurrency
-    imut counter = Counter.new("main")
+    // Structs, interfaces and actors
+    imut p = Point.new(3, 4)
+    println(p.describe())
+    mut counter = spawn Counter.new()
+    imut now = counter.increment(5)
+    send counter.increment(1)
     scope {
-        spawn counter.increment()
-        spawn counter.increment()
-        spawn counter.increment()
+        spawn { println("task one") }
+        spawn { println("task two") }
     }
-    println("Final count: {counter.count}")
 
-    // Channel
+    // Channels
     imut ch = channel(10)
-    send ch.put("hello")
+    ch.send(42)
+    imut got = ch.receive()
 
-    // Lambda / higher-order function
-    imut doubled = transform(numbers, fn(n: int) -> int {
-        n * 2
-    })
-
-    println("Done!")
-}
-
-fn transform(arr: int[], f: fn(int) -> int) -> int[] {
-    mut result = []
-    for item in arr {
-        push(result, f(item))
-    }
-    return result
+    // Java interop and casts
+    imut list = ArrayList.new()
+    list.add("x")
+    imut doubled = transform(numbers, fn(v: int) -> int { v * 2 })
+    imut erased: object = p
+    imut again: Point = erased as Point
+    println(typeOf(got) + " " + strings.repeat("=", 3) + toString(m.abs(-2)) + toString(again.x))
 }

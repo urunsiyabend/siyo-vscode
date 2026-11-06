@@ -1,8 +1,8 @@
 {
   "name": "siyo",
   "displayName": "Siyo Language",
-  "description": "Syntax highlighting and language support for the Siyo programming language",
-  "version": "0.1.0",
+  "description": "Syntax highlighting and snippets for the Siyo programming language (Siyo 0.9)",
+  "version": "0.2.0",
   "publisher": "SiyoLang",
   "author": {
     "name": "Siyo Language Team"
@@ -17,12 +17,14 @@
     "vscode": "^1.75.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Snippets"
   ],
   "keywords": [
     "siyo",
     "programming language",
     "syntax highlighting",
+    "snippets",
     "concurrency",
     "actor model"
   ],
@@ -46,6 +48,24 @@
         "scopeName": "source.siyo",
         "path": "./syntaxes/siyo.tmLanguage.json"
       }
+    ],
+    "snippets": [
+      {
+        "language": "siyo",
+        "path": "./snippets/siyo.json"
+      }
     ]
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "package": "vsce package --no-dependencies",
+    "verify:vsix": "node scripts/verify-vsix.mjs"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "4.1.0",
+    "ovsx": "1.3.0",
+    "vscode-oniguruma": "2.0.1",
+    "vscode-textmate": "9.3.2",
+    "yaml": "2.9.1"
   }
 }

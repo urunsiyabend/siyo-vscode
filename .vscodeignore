@@ -1,5 +1,18 @@
+# Only the declarative extension ships: package.json, grammar, snippets,
+# language configuration, icon, README, CHANGELOG and LICENSE.
 .vscode/**
 .git/**
+.github/**
 .gitignore
+.nvmrc
+node_modules/**
+test/**
+scripts/**
+docs/**
+example.siyo
+package-lock.json
+*.vsix
 *.md
 !README.md
+!CHANGELOG.md
+.claude/**
